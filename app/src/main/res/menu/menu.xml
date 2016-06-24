@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.fuckfragment.MainActivity">
+    <!--<item-->
+    <!--android:id="@+id/action_settings"-->
+    <!--android:orderInCategory="100"-->
+    <!--android:title="@string/toolbar_title"-->
+    <!--app:showAsAction="never"-->
+    <!--/>-->
+
+    <!--
+    always :总是显示在ActionBar上
+    collapseActionView：显示可展开的菜单
+    ifRoom：如果ActionBar上有空间则显示，否则不显示
+    never：总是收到溢出菜单中（三个点）
+    withText：将图标和文本一起显示（只在横屏下有效）
+    -->
+    <item android:id="@+id/toolbar_save"
+        android:icon="@drawable/favourite"
+        android:title=""
+        app:showAsAction="always"></item>
+
+    <item
+        android:id="@+id/toolbar_share"
+        android:icon="@drawable/share"
+        android:title=""
+        app:showAsAction="always"></item>
+
+    <item
+        android:id="@+id/toolbar_more"
+        android:title="更多"
+        app:showAsAction="always"></item>
+</menu>

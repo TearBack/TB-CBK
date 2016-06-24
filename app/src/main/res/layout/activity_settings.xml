@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:context="com.test.zjj.tb_cbk.ui.activity.SettingsActivity">
+
+    <ImageView
+        android:id="@+id/settings_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/logo" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="#00ffff"
+        android:text="收藏夹" />
+
+    <TextView
+        android:id="@+id/settings_collect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="收藏夹"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/settings_history"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="浏览记录"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="#00ffff"
+        android:text="关于客户端" />
+
+    <TextView
+        android:id="@+id/settings_version"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="版本信息"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/settings_suggest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="意见反馈"
+        android:textSize="20sp" />
+
+</LinearLayout>

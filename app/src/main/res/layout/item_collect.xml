@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/collect_item_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#2400ffff"
+        android:text="1" />
+
+    <TextView
+        android:id="@+id/collect_item_savetime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="5月1日 56:78" />
+
+    <TextView
+        android:id="@+id/collect_item_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@id/collect_item_savetime"
+        android:layout_toRightOf="@id/collect_item_num"
+        android:singleLine="true"
+        android:text="这里是标题" />
+
+
+</RelativeLayout>
