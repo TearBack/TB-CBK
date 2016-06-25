@@ -56,7 +56,7 @@ public class CollectListAdapter extends BaseAdapter {
         }
         vh.tv_num.setText(position+1+"");
         vh.tv_title.setText(list.get(position).getTitle());
-        vh.tv_time.setText(new SimpleDateFormat("MM月dd日 HH:mm").format(new Date(list.get(position).getSaveTime())));
+        vh.tv_time.setText(new SimpleDateFormat("MM月dd日 hh:mm").format(new Date(list.get(position).getSaveTime())));
         return convertView;
     }
 

@@ -6,7 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,14 +36,15 @@ public class DetailActivity extends AppCompatActivity {
             tv_time.setText(mInfo.getPubDate());
             tv_source.setText(mInfo.getSource());
             tv_desc.setText(mInfo.getDesc());
+
             String html = mInfo.getHtml();
             Log.i("atest", "-->onCreate: html:" + html);
-            if (html != null) {
-                tv_html.setText(Html.fromHtml(html));
+            if (!TextUtils.isEmpty(html)) {
+                tv_html.setText(html);
             }
+
             DBHelper helper = new DBHelper(this, "chabaike");
             SQLiteDatabase wdb = helper.getWritableDatabase();
-            SQLiteDatabase rdb = helper.getReadableDatabase();
             boolean isAdd = DBHelper.checkedHistory(wdb, mInfo.getLink());
             if (isAdd) {
                 Log.i("atest", "-->onCreate: :" + "历史已经添加过了!");

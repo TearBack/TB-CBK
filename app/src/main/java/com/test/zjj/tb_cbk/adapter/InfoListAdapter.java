@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,15 +71,17 @@ public class InfoListAdapter extends BaseAdapter {
         vh.info_tv_desc.setText(info.getDesc());
         vh.info_tv_time.setText(info.getPubDate());
         vh.info_tv_source.setText(info.getSource());
-        if (info.getImageurls().length != 0) {
-            for (int i = 0; i < info.getImageurls().length; i++) {
-                String str = info.getImageurls()[i].getUrl();
-            }
-            String img_url = info.getImageurls()[0].getUrl();
-            Picasso.with(context).load(img_url).into(vh.info_img);
+
+        String imgurl = info.getImageurl();
+        Log.i("testi", "LineNum:75-->InfoListAdapter-->getView: imageurl:" + imgurl);
+        if (!TextUtils.isEmpty(imgurl)) {
+
+            Picasso.with(context).load(imgurl).into(vh.info_img);
 //            vh.info_img.setTag(img_url);
 //            Log.i("test", "-->getView: imgurl:" + img_url);
 //            loadImage(vh.info_img, img_url);
+        }else {
+            vh.info_img.setImageResource(R.drawable.icon_sorry);
         }
         return convertView;
     }

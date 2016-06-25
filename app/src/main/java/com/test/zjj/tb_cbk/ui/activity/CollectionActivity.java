@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -28,6 +29,13 @@ public class CollectionActivity extends AppCompatActivity {
         Boolean isHistory = getIntent().getBooleanExtra("isHistory", false);
         ListView listView = (ListView) findViewById(R.id.collect_lv);
         TextView tv_tile = (TextView) findViewById(R.id.collect_tv_title);
+        findViewById(R.id.collect_img_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         DBHelper helper = new DBHelper(this, "chabaike");
         SQLiteDatabase rdb = helper.getReadableDatabase();
 
@@ -38,6 +46,7 @@ public class CollectionActivity extends AppCompatActivity {
             if (count != 0) {
                 list = getCollectionList(cursor);
             }
+            tv_tile.setText("收藏夹");
         }else {
             Cursor cursor = rdb.query("history",null,null,null,null,null,null);
             long count = cursor.getCount();

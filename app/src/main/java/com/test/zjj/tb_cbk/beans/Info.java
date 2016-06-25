@@ -3,66 +3,41 @@ package com.test.zjj.tb_cbk.beans;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/6/22.
  */
-public class Info implements Parcelable{
+public class Info implements Parcelable {
     private String title;
     private String desc;
     private String html;
     private String source;
     private String pubDate;
     private String nid;
-    private Images[] imageurls;
+    //    private Images[] imageurls;
+    private String imageurl;
     private String channelName;
     private String link;
-
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
-    }
-
-    public static Creator<Info> getCREATOR() {
-        return CREATOR;
-    }
-
-    public String getChannelName() {
-        return channelName;
-    }
-
-    public void setChannelName(String channelName) {
-        this.channelName = channelName;
-    }
+    private List<String> contentStrList;
 
     public Info(){}
 
-    protected Info(Parcel in) {
-        title = in.readString();
-        desc = in.readString();
-        html = in.readString();
-        source = in.readString();
-        pubDate = in.readString();
-        nid = in.readString();
-        channelName = in.readString();
-        link = in.readString();
+    @Override
+    public String toString() {
+        return "Info{" +
+                "title='" + title + '\'' +
+                ", desc='" + desc + '\'' +
+                ", html='" + html + '\'' +
+                ", source='" + source + '\'' +
+                ", pubDate='" + pubDate + '\'' +
+                ", nid='" + nid + '\'' +
+                ", imageurl='" + imageurl + '\'' +
+                ", channelName='" + channelName + '\'' +
+                ", link='" + link + '\'' +
+                ", contentStrList=" + contentStrList +
+                '}';
     }
-
-    public static final Creator<Info> CREATOR = new Creator<Info>() {
-        @Override
-        public Info createFromParcel(Parcel in) {
-            return new Info(in);
-        }
-
-        @Override
-        public Info[] newArray(int size) {
-            return new Info[size];
-        }
-    };
 
     public String getTitle() {
         return title;
@@ -112,13 +87,62 @@ public class Info implements Parcelable{
         this.nid = nid;
     }
 
-    public Images[] getImageurls() {
-        return imageurls;
+    public String getImageurl() {
+        return imageurl;
     }
 
-    public void setImageurls(Images[] imageurls) {
-        this.imageurls = imageurls;
+    public void setImageurl(String imageurl) {
+        this.imageurl = imageurl;
     }
+
+    public String getChannelName() {
+        return channelName;
+    }
+
+    public void setChannelName(String channelName) {
+        this.channelName = channelName;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public List<String> getContentStrList() {
+        return contentStrList;
+    }
+
+    public void setContentStrList(List<String> contentStrList) {
+        this.contentStrList = contentStrList;
+    }
+
+    protected Info(Parcel in) {
+        title = in.readString();
+        desc = in.readString();
+        html = in.readString();
+        source = in.readString();
+        pubDate = in.readString();
+        nid = in.readString();
+        imageurl = in.readString();
+        channelName = in.readString();
+        link = in.readString();
+        contentStrList = in.createStringArrayList();
+    }
+
+    public static final Creator<Info> CREATOR = new Creator<Info>() {
+        @Override
+        public Info createFromParcel(Parcel in) {
+            return new Info(in);
+        }
+
+        @Override
+        public Info[] newArray(int size) {
+            return new Info[size];
+        }
+    };
 
     @Override
     public int describeContents() {
@@ -133,21 +157,9 @@ public class Info implements Parcelable{
         dest.writeString(source);
         dest.writeString(pubDate);
         dest.writeString(nid);
+        dest.writeString(imageurl);
         dest.writeString(channelName);
         dest.writeString(link);
-    }
-
-    @Override
-    public String toString() {
-        return "Info{" +
-                "title='" + title + '\'' +
-                ", desc='" + desc + '\'' +
-                ", html='" + html + '\'' +
-                ", source='" + source + '\'' +
-                ", pubDate='" + pubDate + '\'' +
-                ", nid='" + nid + '\'' +
-                ", imageurls=" + Arrays.toString(imageurls) +
-                ", channelName='" + channelName + '\'' +
-                '}';
+        dest.writeStringList(contentStrList);
     }
 }

@@ -57,4 +57,12 @@ public class TabInfo implements Parcelable{
         dest.writeString(channelId);
         dest.writeString(name);
     }
+
+    @Override
+    public String toString() {
+        return "TabInfo{" +
+                "channelId='" + channelId + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

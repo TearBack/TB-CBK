@@ -36,7 +36,6 @@ import in.srain.cube.views.ptr.PtrClassicFrameLayout;
  */
 public class ContentFragment extends Fragment {
     private PtrClassicFrameLayout mRefreshView;
-    private ListView listView;
     private PullToRefreshListView ptrListView;
     private String url;
     private int currentPage = 1;
@@ -46,6 +45,7 @@ public class ContentFragment extends Fragment {
     private final int PULL_STATE_UP = 1;
     private InfoListAdapter listAdapter;
     private ImageView imageView;
+    private boolean isShowData = false;
 
 
     @Nullable
@@ -53,26 +53,27 @@ public class ContentFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.frag_content, null);
         imageView = (ImageView) view.findViewById(R.id.frag_img_loading);
-
-        Log.i("atest", "-->onCreateView: id:"+this.toString() + "00000");
+        Log.i("testi", "LineNum:57-->ContentFragment-->onCreateView: :" + "------");
         initView(view);
         channelID = getArguments().getString("channelID");
         if (channelID != null) {
             url = getUrl(channelID, currentPage);
         }
         //如果是保存果状态，那么直接使用保持的数据
-        if (savedInstanceState != null) {
-            infoList = savedInstanceState.getParcelableArrayList("save");
-            if (infoList != null) {
-                ptrListView.setAdapter(listAdapter = new InfoListAdapter(infoList, getActivity()));
-                imageView.clearAnimation();
-                imageView.setVisibility(View.GONE);
-            }
+        //saveInstance不为空，再判断数据size是否为0，不为零则直接从save里面读取数据内容，为0或者saveInstance为空，那么进行网络获取状态
+        if (savedInstanceState != null && (infoList = savedInstanceState.getParcelableArrayList("save")) != null && infoList.size() != 0) {
+            ptrListView.setAdapter(listAdapter = new InfoListAdapter(infoList, getActivity()));
+            imageView.clearAnimation();
+            imageView.setVisibility(View.GONE);
+            isShowData = true;
+            Log.i("testi", "LineNum:70-->ContentFragment-->onCreateView: savedInstanceState--isShowData:" + isShowData + ",size:" + infoList.size());
         } else {
-            Log.i("atest", "Fragment-->onCreateView: id:"+ this.toString()+ "11111111");
+            Log.i("testi", "LineNum:75-->ContentFragment-->onCreateView: getNetData:" + "---");
             getDataFromNetwork(url, PULL_STATE_DOWN, new RefreshListener() {
                 @Override
                 public void onCompeleteRefresh() {
+                    isShowData = true;
+                    Log.i("testi", "LineNum:78-->ContentFragment-->onCompeleteRefresh: getNetData--isShownData:" + isShowData);
                     imageView.clearAnimation();
                     imageView.setVisibility(View.GONE);
                 }
@@ -106,7 +107,7 @@ public class ContentFragment extends Fragment {
                 //跳转到详细页面，把当前的info传递过去
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putParcelable("info",infoList.get(position-1));
+                bundle.putParcelable("info", infoList.get(position - 1));
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -155,8 +156,9 @@ public class ContentFragment extends Fragment {
                 String json = (String) o;
                 try {
                     String jsonArr = JSON_Utils.getInfoJsonArr(json);
+                    Log.i("testi", "LineNum:159-->ContentFragment-->onResoponse: jsonArr:" + jsonArr);
                     //如果原来已经有数据，那么根据下拉还是上拉，选择清空重置数据，或者添加数据
-                    List<Info> temInfoList = JSON_Utils.parseJson2List(Info.class, jsonArr);
+                    List<Info> temInfoList = JSON_Utils.parseJson2List(jsonArr);
                     if (temInfoList == null) {
                         throw new Exception("network data is null");
                     }
@@ -175,18 +177,21 @@ public class ContentFragment extends Fragment {
                         throw new Exception("Pull state is error,state only can be PULL_STATE_DOWN(0) or PULL_STATE_UP(1)");
                     }
                     //更新listview
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (listAdapter == null) {  //第一次设置数据
-                                listAdapter = new InfoListAdapter(infoList, getActivity());
-                                ptrListView.setAdapter(listAdapter);
-                            } else {
-                                listAdapter.notifyDataSetChanged();
+                    Log.i("testi", "LineNum:178-->ContentFragment-->onResoponse: getActivity:" + getActivity());
+                    if (getActivity() != null) {    //为了处理快速滑动导致的空
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (listAdapter == null) {  //第一次设置数据
+                                    listAdapter = new InfoListAdapter(infoList, getActivity());
+                                    ptrListView.setAdapter(listAdapter);
+                                } else {
+                                    listAdapter.notifyDataSetChanged();
+                                }
+                                listener.onCompeleteRefresh();  //调用刷新完成方法
                             }
-                            listener.onCompeleteRefresh();  //调用刷新完成方法
-                        }
-                    });
+                        });
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -201,15 +206,17 @@ public class ContentFragment extends Fragment {
 
     @Override
     public void onResume() {
-        AnimaUtils.setLoadingAnima(imageView);
+        if (!isShowData) {
+            AnimaUtils.setLoadingAnima(imageView);
+        }
         super.onResume();
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        Log.i("atest", "-->onSaveInstanceState:id :" +this.toString()+ "00000");
+        Log.i("testi", "-->onSaveInstanceState:id :" + this.toString() + "00000");
         if (infoList == null || infoList.size() == 0) return;
-        Log.i("atest", "-->onSaveInstanceState: id:"+this.toString() + "1111111");
+        Log.i("testi", "-->onSaveInstanceState: id:" + this.toString() + "1111111");
         outState.putParcelableArrayList("save", (ArrayList<? extends Parcelable>) infoList);
     }
 }

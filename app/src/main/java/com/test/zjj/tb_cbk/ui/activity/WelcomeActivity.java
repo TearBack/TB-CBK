@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.test.zjj.tb_cbk.R;
-import com.test.zjj.tb_cbk.utils.Constant;
+import com.test.zjj.tb_cbk.application.ConstantKey;
 import com.test.zjj.tb_cbk.utils.Pref_Utils;
 
 
@@ -51,7 +51,7 @@ public class WelcomeActivity extends Activity {
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Pref_Utils.putBoolean(WelcomeActivity.this, Constant.PRE_KEY_FIRST_OPEN, false);
+                        Pref_Utils.putBoolean(WelcomeActivity.this, ConstantKey.PRE_KEY_FIRST_OPEN, false);
 
                         Intent intent = new Intent(WelcomeActivity.this,HomeActivity.class);
                         startActivity(intent);

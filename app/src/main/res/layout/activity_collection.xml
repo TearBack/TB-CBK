@@ -6,11 +6,18 @@
     android:padding="10dp"
     tools:context="com.test.zjj.tb_cbk.ui.activity.CollectionActivity">
 
+    <ImageView
+        android:id="@+id/collect_img_back"
+        android:layout_width="42dp"
+        android:layout_height="?attr/actionBarSize"
+        android:src="@drawable/back" />
+
     <TextView
         android:id="@+id/collect_tv_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?attr/actionBarSize"
         android:background="#2700ffff"
+        android:clickable="false"
         android:gravity="center"
         android:text="收藏夹"
         android:textColor="#000000"

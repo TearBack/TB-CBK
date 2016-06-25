@@ -28,6 +28,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         switch (v.getId()) {
             case R.id.settings_collect:
                 intent.setClass(SettingsActivity.this,CollectionActivity.class);
+                intent.putExtra("isHistory",false);
                 break;
             case R.id.settings_history:
                 intent.setClass(SettingsActivity.this,CollectionActivity.class);
